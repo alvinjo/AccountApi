@@ -1,6 +1,6 @@
-package com.qa.accountGenerator.accountapi.persistence.repository;
+package com.qa.account.accountapi.persistence.repository;
 
-import com.qa.accountGenerator.accountapi.persistence.domain.Account;
+import com.qa.account.accountapi.persistence.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

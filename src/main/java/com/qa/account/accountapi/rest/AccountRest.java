@@ -1,9 +1,9 @@
-package com.qa.accountGenerator.accountapi.rest;
+package com.qa.account.accountapi.rest;
 
-import com.qa.accountGenerator.accountapi.persistence.domain.Account;
-import com.qa.accountGenerator.accountapi.service.AccountService;
+import com.qa.account.accountapi.persistence.domain.Account;
+import com.qa.account.accountapi.service.AccountService;
 
-import com.qa.accountGenerator.accountapi.util.constants.Constants;
+import com.qa.account.accountapi.util.constants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

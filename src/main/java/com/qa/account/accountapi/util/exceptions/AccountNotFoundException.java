@@ -1,4 +1,4 @@
-package com.qa.accountGenerator.accountapi.util.exceptions;
+package com.qa.account.accountapi.util.exceptions;
 
 public class AccountNotFoundException extends RuntimeException{
 

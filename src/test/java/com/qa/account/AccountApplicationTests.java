@@ -1,4 +1,4 @@
-package com.qa.accountGenerator;
+package com.qa.account;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AccountGeneratorApplicationTests {
+public class AccountApplicationTests {
 
 	@Test
 	public void contextLoads() {

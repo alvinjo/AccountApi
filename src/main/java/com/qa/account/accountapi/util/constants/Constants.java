@@ -1,4 +1,4 @@
-package com.qa.accountGenerator.accountapi.util.constants;
+package com.qa.account.accountapi.util.constants;
 
 public class Constants {
 

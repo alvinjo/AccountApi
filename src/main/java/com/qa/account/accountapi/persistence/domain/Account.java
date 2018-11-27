@@ -1,4 +1,4 @@
-package com.qa.accountGenerator.accountapi.persistence.domain;
+package com.qa.account.accountapi.persistence.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
