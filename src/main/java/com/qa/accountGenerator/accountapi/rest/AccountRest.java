@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/accounts")
+@RequestMapping(Constants.URL_BASE)
 @RestController
 public class AccountRest {
 
