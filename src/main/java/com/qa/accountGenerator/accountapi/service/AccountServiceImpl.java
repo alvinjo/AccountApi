@@ -2,13 +2,11 @@ package com.qa.accountGenerator.accountapi.service;
 
 import com.qa.accountGenerator.accountapi.persistence.domain.Account;
 import com.qa.accountGenerator.accountapi.persistence.repository.AccountRepository;
-import com.qa.accountGenerator.accountapi.service.AccountService;
+import com.qa.accountGenerator.accountapi.util.exceptions.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +24,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account getAccount(Long id) {
         Optional<Account> account = repo.findById(id);
-
-        return account.get();
+        return account.orElseThrow(() -> new AccountNotFoundException(id.toString()));
     }
 
     @Override
@@ -36,21 +33,28 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteAccount(Long id) {
-        repo.deleteById(id);
+    public ResponseEntity<Object> deleteAccount(Long id) {
+        if(accountExists(id)){
+            repo.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<Object> updateAccount(Account account, Long id) {
-        Optional<Account> accountOptional = repo.findById(id);
-
-        if (!accountOptional.isPresent()) {
-            return ResponseEntity.notFound().build();
+        if(accountExists(id)){
+            account.setId(id);
+            repo.save(account);
+            return ResponseEntity.ok().build();
         }
-
-        account.setId(id);
-        repo.save(account);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
+
+
+    private boolean accountExists(Long id){
+        Optional<Account> accountOptional = repo.findById(id);
+        return accountOptional.isPresent();
+    }
+
 }

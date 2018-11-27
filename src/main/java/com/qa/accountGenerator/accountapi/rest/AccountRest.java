@@ -3,7 +3,7 @@ package com.qa.accountGenerator.accountapi.rest;
 import com.qa.accountGenerator.accountapi.persistence.domain.Account;
 import com.qa.accountGenerator.accountapi.service.AccountService;
 
-import org.assertj.core.util.Arrays;
+import com.qa.accountGenerator.accountapi.util.constants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/Accounts")
+@RequestMapping("/accounts")
 @RestController
 public class AccountRest {
 
@@ -35,46 +35,42 @@ public class AccountRest {
     @Value("${path.determinePrize}")
     private String determinePrizePath;
 
-    @GetMapping("/getAccounts")
+
+    @GetMapping(Constants.URL_GET_ACCOUNTS)
     public List<Account> getAccounts() {
         return service.getAccounts();
     }
 
-    @GetMapping("/getAccount/{id}")
+    @GetMapping(Constants.URL_GET_ACCOUNT_BY_ID)
     public Account getAccount(@PathVariable Long id) {
         return service.getAccount(id);
     }
 
-    @DeleteMapping("/deleteAccount/{id}")
+    @DeleteMapping(Constants.URL_DELETE_ACCOUNT)
     public void deleteAccount(@PathVariable Long id) {
         service.deleteAccount(id);
     }
 
-    @PutMapping("/updateAccount/{id}")
+    @PutMapping(Constants.URL_UPDATE_ACCOUNT)
     public ResponseEntity<Object> updateAccount(@RequestBody Account account, @PathVariable Long id) {
         return service.updateAccount(account, id);
     }
     
-    @PostMapping("/createAccount")
+    @PostMapping(Constants.URL_CREATE_ACCOUNT)
     public List<Object> createAccount(@RequestBody Account account) {
     	String generatedNum = restTemplate.getForObject(generatorURL + accountNumGeneratorPath, String.class);
-    	
-    	Integer prize = restTemplate.getForObject(prizeURL + determinePrizePath + generatedNum, Integer.class);
+    	Integer prizeWon = restTemplate.getForObject(prizeURL + determinePrizePath + generatedNum, Integer.class);
  	
     	account.setAccountNumber(generatedNum);
     	
-    	Account createdAccount = addAccount(account);
-
-    	List<Object> prizeAndAccount = new ArrayList<>();
-    	prizeAndAccount.add(createdAccount);
-    	prizeAndAccount.add(prize);
-    	
-    	return prizeAndAccount;
-    	
+    	return prizeAndAccount(service.addAccount(account), prizeWon);
     }
-    
-    private Account addAccount(Account account) {
-        return service.addAccount(account);
+
+    private List<Object> prizeAndAccount(Account account, Integer prizeWon){
+        List<Object> prizeAndAccount = new ArrayList<>();
+        prizeAndAccount.add(account);
+        prizeAndAccount.add(prizeWon);
+        return prizeAndAccount;
     }
 
 }

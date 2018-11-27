@@ -12,7 +12,7 @@ public interface AccountService {
 
     Account addAccount(Account account);
 
-    void deleteAccount(Long id);
+    ResponseEntity<Object> deleteAccount(Long id);
 
     ResponseEntity<Object> updateAccount(Account account, Long id);
 }
