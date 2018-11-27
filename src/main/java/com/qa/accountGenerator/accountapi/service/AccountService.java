@@ -10,7 +10,7 @@ public interface AccountService {
 
     Account getAccount(Long id);
 
-    ResponseEntity<Account> createAccount(Account account);
+    Account addAccount(Account account);
 
     void deleteAccount(Long id);
 

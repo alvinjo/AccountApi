@@ -31,12 +31,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseEntity<Account> createAccount(Account account) {
-        Account savedAccount = repo.save(account);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedAccount.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+    public Account addAccount(Account account) {
+        return repo.save(account);
     }
 
     @Override
